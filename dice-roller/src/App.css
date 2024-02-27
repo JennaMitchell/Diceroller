@@ -1,0 +1,4 @@
+.app {
+  width: max(100vw, 100vw);
+  height: max(100vh, 100vh);
+}

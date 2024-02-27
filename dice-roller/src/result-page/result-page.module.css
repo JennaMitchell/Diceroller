@@ -1,0 +1,73 @@
+.resultPage {
+  width: max(100vw, 100vw);
+  height: max(100vh, 100vh);
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.resultPage > p {
+  font-size: 64px;
+  line-height: 0px;
+  height: max-content;
+  width: max-content;
+  padding: 0px;
+
+  color: #fff;
+  text-shadow:
+    0 0 7px #fff,
+    0 0 10px #fff,
+    0 0 21px #fff,
+    0 0 42px #0fa,
+    0 0 82px #0fa,
+    0 0 92px #0fa,
+    0 0 102px #0fa,
+    0 0 151px #0fa;
+}
+.closingButton {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: max-content;
+  height: max-content;
+  padding: 5px 10px;
+  border-radius: 50%;
+  border: none;
+  font-size: 20px;
+  background-color: white;
+  color: black;
+  transition: all 0.5s;
+}
+.closingButton:hover {
+  background-color: black;
+  color: white;
+  cursor: pointer;
+}
+.rollAgainButton {
+  width: max-content;
+  height: max-content;
+  color: #fff;
+  font-size: 32px;
+
+  background-color: transparent;
+  border: none;
+  transition: all 0.5s;
+}
+.rollAgainButton:hover {
+  text-shadow: none;
+  cursor: pointer;
+  text-shadow:
+    0 0 5px hwb(0 100% 0% / 0.949),
+    0 0 8px #fff,
+    0 0 12px #fff,
+    0 0 30px #0fa,
+    0 0 33px #0fa,
+    0 0 34px #0fa;
+}

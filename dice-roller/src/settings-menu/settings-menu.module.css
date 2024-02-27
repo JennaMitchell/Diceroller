@@ -1,0 +1,117 @@
+.settingsTopContainer {
+  background-color: rgb(160, 3, 3);
+  width: max(300px, 300px);
+  height: max-content;
+  max-height: max-content;
+  position: fixed;
+  top: 40px;
+  right: 40px;
+  border-radius: 20px;
+  z-index: 10;
+  box-sizing: border-box;
+}
+.buttonBar {
+  background-color: inherit;
+  width: max(100%, 100%);
+  height: max-content;
+  display: flex;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 2.5px 10px;
+  box-sizing: border-box;
+}
+.buttonBar > button,
+.settingHeaderBar > button {
+  width: max(25px, 25px);
+  height: max(25px, 25px);
+  background-color: inherit;
+  color: red;
+  border: none;
+  border-radius: 50%;
+  transition: all 0.5s;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5px;
+}
+.buttonBar > button:hover,
+.settingHeaderBar > button:hover,
+.settingHeaderBar:hover > button {
+  background-color: white;
+  color: rgb(191, 2, 2);
+  cursor: pointer;
+}
+/*
+ Settings Sections
+*/
+
+.settingsContainer {
+  width: max(100%, 100%);
+  height: max-content;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: max-content;
+  background-color: rgb(219, 4, 4);
+  padding: 10px;
+  border-radius: 10px;
+  box-sizing: border-box;
+  gap: 5px;
+}
+.settingsSection {
+  width: max(100%, 100%);
+  height: max-content;
+  display: flex;
+  flex-direction: column;
+
+  position: relative;
+  box-sizing: border-box;
+  gap: 5px;
+}
+
+.settingsSectionLineSeperator {
+  width: max-content;
+  height: calc(100% - 32px);
+  position: absolute;
+  top: 30px;
+  left: 11.5px;
+  border-left: 2px solid black;
+  transition: all 0.5s;
+}
+.settingHeaderBar > button:hover > .settingsSectionLineSeperator {
+  border: 2px solid white;
+}
+.settingHeaderBar {
+  width: max(100%, 100%);
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  background-color: inherit;
+  height: max-content;
+  gap: 10px;
+  transition: all 0.5s;
+}
+.settingHeaderBar:hover {
+  cursor: pointer;
+}
+
+.settingHeaderBar:hover ~ .settingsSectionLineSeperator {
+  border-left: 2px solid white;
+}
+
+.settingHeaderBar > button {
+  color: black;
+}
+
+.settingHeaderBar > p {
+  color: white;
+  font-size: 18px;
+  line-height: 18px;
+
+  padding: 0px;
+
+  margin: 0px;
+}

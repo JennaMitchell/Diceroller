@@ -1,0 +1,26 @@
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  background: #fff;
+}
+
+#info {
+  position: absolute;
+  top: 60px;
+  left: 10px;
+  background: #181c20;
+  color: #8c92a4;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 32px;
+  pointer-events: none;
+}
+div {
+  box-sizing: border-box;
+}
+p {
+  margin: 0px;
+  padding: 0px;
+}

@@ -1,2 +1,0 @@
-# Diceroller
-Dice rolling app
