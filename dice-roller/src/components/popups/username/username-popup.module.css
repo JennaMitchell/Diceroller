@@ -1,0 +1,75 @@
+.mainContainer {
+  width: max-content;
+  padding: 20px;
+  background-color: white;
+  color: red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
+  gap: 15px;
+}
+.mainContainer > input {
+  width: max(200px, 200px);
+  height: max-content;
+  padding: 10px 10px;
+  border: 2px solid rgb(134, 3, 3);
+  color: black;
+  border-radius: 10px;
+}
+.mainContainer > input:hover {
+  cursor: pointer;
+}
+.mainContainer > input:active,
+.mainContainer > input:focus {
+  outline-style: none;
+
+  border-color: rgb(250, 35, 35);
+}
+.mainContainer > label {
+  position: absolute;
+  top: 10px;
+  left: 30px;
+  font-size: 14px;
+  color: red;
+  background-color: white;
+  padding: 2px 4px;
+}
+.closePopupButton {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: max-content;
+  padding: 4px 8px;
+  border-radius: 50%;
+  font-size: 12px;
+  border: none;
+  background-color: red;
+  color: white;
+  transition: all 0.5s;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.closePopupButton:hover,
+.submitButton:hover {
+  cursor: pointer;
+  color: red;
+  background-color: white;
+}
+.submitButton {
+  width: max-content;
+  padding: 10px 15px;
+
+  border-radius: 10px;
+  font-size: 16px;
+  border: none;
+  background-color: red;
+  color: white;
+  transition: all 0.5s;
+}

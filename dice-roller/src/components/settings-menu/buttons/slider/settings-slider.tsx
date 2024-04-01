@@ -1,5 +1,5 @@
-import { meshSettingsStoreActions } from "../../../library/store/mesh-settings-store";
-import { useAppDispatch } from "../../../library/store/typescript-hooks";
+import { meshSettingsStoreActions } from "../../../../library/store/mesh-settings-store";
+import { useAppDispatch } from "../../../../library/store/typescript-hooks";
 import classes from "./settings-slider.module.css";
 import { useRef, useState } from "react";
 type SettingsInputPropsType = {

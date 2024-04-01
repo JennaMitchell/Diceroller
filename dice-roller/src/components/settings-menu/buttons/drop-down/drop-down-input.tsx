@@ -1,5 +1,5 @@
-import { animationSettingsStoreActions } from "../../../library/store/animation-settings-store";
-import { useAppDispatch } from "../../../library/store/typescript-hooks";
+import { animationSettingsStoreActions } from "../../../../library/store/animation-settings-store";
+import { useAppDispatch } from "../../../../library/store/typescript-hooks";
 import classes from "./drop-down-input.module.css";
 import { useRef, useState } from "react";
 type DropDownProps = {

@@ -1,0 +1,12 @@
+.blackBackground {
+  width: max(100vw, 100vw);
+  height: max(100vh, 100vh);
+  background-color: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

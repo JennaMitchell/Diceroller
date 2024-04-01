@@ -3,12 +3,16 @@ import { meshSettingsStoreSlice } from "./mesh-settings-store";
 import { lightSettingsStoreSlice } from "./light-settings-store";
 import { canvasSettingsStoreSlice } from "./canvas-settings-store";
 import { animationSettingsStoreSlice } from "./animation-settings-store";
+import { popupSettingsStoreSlice } from "./popup-settings-store";
+import { userDataSettingsStoreSlice } from "./users-data-store";
 const store = configureStore({
   reducer: {
     animationSettings: animationSettingsStoreSlice.reducer,
     lightSettings: lightSettingsStoreSlice.reducer,
     meshSettings: meshSettingsStoreSlice.reducer,
     canvasSettings: canvasSettingsStoreSlice.reducer,
+    popupSettings: popupSettingsStoreSlice.reducer,
+    userDataSettings: userDataSettingsStoreSlice.reducer,
   },
 });
 

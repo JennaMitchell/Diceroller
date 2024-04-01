@@ -1,0 +1,22 @@
+.connectButton {
+  position: absolute;
+  right: 50px;
+  top: 100px;
+  width: max-content;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  background-color: red;
+  color: white;
+  transition: all 0.5s;
+  z-index: 10000;
+  font-size: 18px;
+}
+.connectButton:hover {
+  cursor: pointer;
+  background-color: white;
+  color: red;
+}
+.hideConnectButton {
+  z-index: 3;
+}

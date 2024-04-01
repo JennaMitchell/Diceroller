@@ -45,9 +45,9 @@ export function D20({
   const [resolveTriggered, setResolvedTriggered] = useState(0);
   // let { x, z, rotationX, rotationZ, rotationY } = [0,0,0,0];
 
-  // RIGHT
+  // LEFT
 
-  const rightSpring = useSpring({
+  const leftSpring = useSpring({
     from: {
       x: 3000,
       z: 0,
@@ -85,8 +85,8 @@ export function D20({
     immediate: false,
   });
 
-  // LEFT
-  const leftSpring = useSpring({
+  // RIGHT
+  const rightSpring = useSpring({
     from: {
       x: -3000,
       z: 0,
@@ -124,9 +124,9 @@ export function D20({
     immediate: false,
   });
 
-  // // UP
+  // // DOWN
 
-  const upSpring = useSpring({
+  const downSpring = useSpring({
     from: {
       x: 0,
       z: 0,
@@ -163,9 +163,9 @@ export function D20({
 
     immediate: false,
   });
-  // // DOWN
+  // // UP
 
-  const downSpring = useSpring({
+  const upSpring = useSpring({
     from: {
       x: 0,
       z: 0,

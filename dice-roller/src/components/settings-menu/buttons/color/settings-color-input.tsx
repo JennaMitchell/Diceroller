@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import classes from "./settings-color-input.module.css";
-import { useAppDispatch } from "../../../library/store/typescript-hooks";
-import { meshSettingsStoreActions } from "../../../library/store/mesh-settings-store";
+import { useAppDispatch } from "../../../../library/store/typescript-hooks";
+import { meshSettingsStoreActions } from "../../../../library/store/mesh-settings-store";
 import { KeyboardEvent } from "react";
 
 type SettingsColorInputPropsType = {

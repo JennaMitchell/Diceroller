@@ -7,7 +7,7 @@ import {
 } from "@heroicons/react/24/solid";
 import SettingsSliderInput from "./buttons/slider/settings-slider";
 import SettingsColorInput from "./buttons/color/settings-color-input";
-import { useAppSelector } from "../library/store/typescript-hooks";
+import { useAppSelector } from "../../library/store/typescript-hooks";
 import { useState, useRef } from "react";
 
 import DropDownInput from "./buttons/drop-down/drop-down-input";

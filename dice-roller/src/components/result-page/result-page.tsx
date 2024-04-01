@@ -2,8 +2,8 @@ import classes from "./result-page.module.css";
 import {
   useAppDispatch,
   useAppSelector,
-} from "../library/store/typescript-hooks";
-import { animationSettingsStoreActions } from "../library/store/animation-settings-store";
+} from "../../library/store/typescript-hooks";
+import { animationSettingsStoreActions } from "../../library/store/animation-settings-store";
 const ResultPage = (props: any) => {
   const dispatch = useAppDispatch();
   const valueRolled = useAppSelector(

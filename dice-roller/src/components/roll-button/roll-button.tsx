@@ -1,6 +1,6 @@
 import classes from "./roll-button.module.css";
-import { useAppDispatch } from "../library/store/typescript-hooks";
-import { animationSettingsStoreActions } from "../library/store/animation-settings-store";
+import { useAppDispatch } from "../../library/store/typescript-hooks";
+import { animationSettingsStoreActions } from "../../library/store/animation-settings-store";
 const RollButton = () => {
   const dispatch = useAppDispatch();
   const buttonHandler = () => {
