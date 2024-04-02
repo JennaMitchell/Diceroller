@@ -7,6 +7,7 @@ type popupSettingsType = {
   usernamePopupActive: boolean;
   roomSelectPopupActive: boolean;
   roomSelectPopupUpdateActiveUsers: boolean;
+  roomEditorPrivilegePasserPopupActive: boolean;
 };
 
 const initialState: popupSettingsType = {
@@ -16,6 +17,7 @@ const initialState: popupSettingsType = {
   usernamePopupActive: false,
   roomSelectPopupActive: false,
   roomSelectPopupUpdateActiveUsers: false,
+  roomEditorPrivilegePasserPopupActive: false,
 };
 
 export const popupSettingsStoreSlice = createSlice({
@@ -39,6 +41,9 @@ export const popupSettingsStoreSlice = createSlice({
     },
     setRoomSelectPopupUpdateActiveUsers(state, { payload }) {
       state.roomSelectPopupUpdateActiveUsers = payload;
+    },
+    setRoomEditorPrivilegePasserPopupActive(state, { payload }) {
+      state.roomEditorPrivilegePasserPopupActive = payload;
     },
   },
 });

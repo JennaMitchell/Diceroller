@@ -6,6 +6,7 @@ import {
   useAppSelector,
 } from "../../library/store/typescript-hooks";
 import { popupSettingsStoreActions } from "../../library/store/popup-settings-store";
+import { userDataSettingsStoreActions } from "../../library/store/users-data-store";
 const ConnectButton = () => {
   const dispatch = useAppDispatch();
   const username = useAppSelector((state) => state.userDataSettings.username);
@@ -15,9 +16,18 @@ const ConnectButton = () => {
 
   const disconnectClickHandler = () => {
     if (username) {
-      socket.emit("userDisconnecting", username, (response: any) => {
-        serverMessageHandler(dispatch, response);
-      });
+      socket.emit(
+        "userDisconnecting",
+        username,
+        (response: { messageType: string; messageText: string }) => {
+          if (response.messageType === "Success") {
+            dispatch(userDataSettingsStoreActions.setGameRoomJoined(""));
+            dispatch(userDataSettingsStoreActions.setIsRoomEditor(false));
+            dispatch(userDataSettingsStoreActions.setUsername(""));
+          }
+          serverMessageHandler(dispatch, response);
+        }
+      );
     } else {
       dispatch(popupSettingsStoreActions.setUsernameMessagePopupActive(true));
     }

@@ -4,7 +4,7 @@ class Room {
     roomTitle,
     roomIdSocketPath,
     usersInRoom,
-    userWithDiceEditorPrivilege,
+    roomEditor,
     rollOutCome,
     animationDirection
   ) {
@@ -14,7 +14,7 @@ class Room {
 
     this.usersInRoom = usersInRoom;
 
-    this.userWithDiceEditorPrivilege = userWithDiceEditorPrivilege;
+    this.roomEditor = roomEditor;
     this.rollOutCome = rollOutCome;
     this.animationDirection = animationDirection;
   }
@@ -66,12 +66,31 @@ class Room {
 
       this.usersInRoom = copyOfUsersInRoom;
     }
-
-    console.log("70");
   }
 
-  addMessage(message) {
-    this.history.push(message);
+  updateRoomEditor(username) {
+    this.roomEditor = username;
+  }
+  roomEditorDisconnecting(username) {
+    if (this.usersInRoom.length >= 2) {
+      // Finding the other user
+
+      let newRoomEditor = "";
+
+      for (
+        let indexOfUsersinRoom = 0;
+        indexOfUsersinRoom < this.usersInRoom.length;
+        indexOfUsersinRoom++
+      ) {
+        if (this.usersInRoom[indexOfUsersinRoom] !== username) {
+          newRoomEditor = this.usersInRoom[indexOfUsersinRoom];
+        }
+      }
+
+      this.roomEditor = newRoomEditor;
+    } else {
+      this.roomEditor = "";
+    }
   }
 
   clearHistory() {

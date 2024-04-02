@@ -10,10 +10,12 @@ import {
 } from "../../../library/store/typescript-hooks";
 import { popupSettingsStoreActions } from "../../../library/store/popup-settings-store";
 import socket from "../../../library/socket-io-functions/socket-connection";
+import { userDataSettingsStoreActions } from "../../../library/store/users-data-store";
 
 type responseType = {
   messageText: String;
   messageType: string;
+  isFirstUser: boolean;
 };
 const RoomSelection = () => {
   const [roomSelectionPopupActive, setRoomSelectionPopupActive] =
@@ -40,6 +42,7 @@ const RoomSelection = () => {
 
   const numberOfUsersRetriever = useCallback(async () => {
     const socketNameSpaces: any = nameSpaceListener;
+    console.log(socketNameSpaces);
     try {
       await socketNameSpaces.roomOne.emit(
         "numberOfUsersRequest",
@@ -87,6 +90,10 @@ const RoomSelection = () => {
 
           if (response.messageType === "Success") {
             dispatch(popupSettingsStoreActions.setRoomSelectPopupActive(false));
+
+            if (response.isFirstUser) {
+              dispatch(userDataSettingsStoreActions.setIsRoomEditor(true));
+            }
           }
         }
       );

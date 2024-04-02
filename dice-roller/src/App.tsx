@@ -19,6 +19,7 @@ import { nameSpaceListener } from "./library/socket-io-functions/socket-connecti
 import { userDataSettingsStoreActions } from "./library/store/users-data-store";
 import { serverMessageHandler } from "./library/functions/serverMessageHandler";
 import { popupSettingsStoreActions } from "./library/store/popup-settings-store";
+import RoomEditorPrivilegePasser from "./components/popups/room-editor-privilege-passer/room-editor-privilege-passer";
 // Importing Models with gltfjsx
 
 // npx gltfjsx public/models/name.glb -o src/library/assets/3d-models/name.jsx -r public
@@ -67,11 +68,14 @@ export default function App() {
   const gameRoomJoined = useAppSelector(
     (state) => state.userDataSettings.gameRoomJoined
   );
-
+  const isRoomEditor = useAppSelector(
+    (state) => state.userDataSettings.isRoomEditor
+  );
   const [listeners, setListeners] = useState<{
     leaveRoom: any[];
     userJoined: any[];
-  }>({ leaveRoom: [], userJoined: [] });
+    updateRoomEditor: any[];
+  }>({ leaveRoom: [], userJoined: [], updateRoomEditor: [] });
 
   const dispatch = useAppDispatch();
 
@@ -89,35 +93,43 @@ export default function App() {
         // if the connectionis new this variable will be null
         // if the connection ahs already been established this will be the id
 
-        if (!listeners.leaveRoom[i]) {
+        if (!newListenersObject.leaveRoom[i]) {
           typescriptNameSpace[`${data.roomData[i].roomId}`].on(
             "leaveRoom",
-            (data: any) => {
-              console.log(data);
+            (response: any) => {
+              console.log(response);
             }
           );
 
           newListenersObject.leaveRoom[i] = "x";
         }
 
-        if (!listeners.userJoined[i]) {
+        if (!newListenersObject.userJoined[i]) {
           typescriptNameSpace[`${data.roomData[i].roomId}`].on(
             "userJoined",
-            (data: any) => {
-              if (data.usernameThatJoined === username && !gameRoomJoined) {
+            (response: {
+              usernameThatJoined: string;
+              gameRoomJoined: string;
+              isFirstUser: boolean;
+            }) => {
+              if (!username && !gameRoomJoined) {
                 dispatch(
                   userDataSettingsStoreActions.setGameRoomJoined(
-                    data.gameRoomJoined
+                    response.gameRoomJoined
                   )
                 );
 
                 serverMessageHandler(dispatch, {
                   messageType: "Success",
-                  messageText: "You've Joined Room 1!",
+                  messageText: `You've Joined ${data.roomData[i].roomId}!`,
                 });
+
+                if (response.isFirstUser) {
+                  dispatch(userDataSettingsStoreActions.setIsRoomEditor(true));
+                }
               } else if (
-                data.usernameThatJoined !== username &&
-                gameRoomJoined === data.gameRoomJoined
+                response.usernameThatJoined !== username &&
+                gameRoomJoined === response.gameRoomJoined
               ) {
                 serverMessageHandler(dispatch, {
                   messageType: "Success",
@@ -132,8 +144,24 @@ export default function App() {
               );
             }
           );
+        }
 
-          newListenersObject.userJoined[i] = "x";
+        if (!newListenersObject.updateRoomEditor[i]) {
+          typescriptNameSpace[`${data.roomData[i].roomId}`].on(
+            "updatedRoomEditor",
+            (response: { newEditorUsername: string; room: string }) => {
+              if (gameRoomJoined === response.room) {
+                if (username === response.newEditorUsername) {
+                  dispatch(userDataSettingsStoreActions.setIsRoomEditor(true));
+                } else {
+                  dispatch(userDataSettingsStoreActions.setIsRoomEditor(false));
+                }
+              }
+              console.log(169);
+            }
+          );
+
+          newListenersObject.updateRoomEditor[i] = "x";
         }
 
         setListeners(newListenersObject);
@@ -145,7 +173,18 @@ export default function App() {
     // Handeling if the user clicks off the browser / goes back or refreshes the browser
     document.addEventListener("visibilitychange", () => {
       // If Socket is active
-      socket.emit("userDisconnecting", "User1");
+      socket.emit(
+        "userDisconnecting",
+        username,
+        (response: { messageType: string; messageText: string }) => {
+          if (response.messageType === "Success") {
+            dispatch(userDataSettingsStoreActions.setGameRoomJoined(""));
+            dispatch(userDataSettingsStoreActions.setIsRoomEditor(false));
+            dispatch(userDataSettingsStoreActions.setUsername(""));
+          }
+          serverMessageHandler(dispatch, response);
+        }
+      );
     });
   }, []); //run this once the component has rendered
 
@@ -165,8 +204,10 @@ export default function App() {
     <>
       {/* </KeyboardControls> */}
       {animationComplete && <ResultPage />}
-      <RollButton />
-      <SettingsMenu />
+
+      {isRoomEditor && <RollButton />}
+      {isRoomEditor && <SettingsMenu />}
+      <RoomEditorPrivilegePasser />
       {username && roomSelectionPopupActive && <RoomSelection />}
       <DisconnectButton />
       {usernamePopupActive && <UsernamePopup />}

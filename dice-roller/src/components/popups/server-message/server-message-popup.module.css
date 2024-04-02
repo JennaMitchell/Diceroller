@@ -5,14 +5,13 @@
   gap: 10px;
   min-height: 30px;
   padding: 10px 10px;
-  position: absolute;
+  position: fixed;
   top: 0px;
   left: 50%;
   transform: translateX(-50%);
   background-color: white;
   color: black;
   border: 2px solid transparent;
-  position: relative;
   align-items: center;
   justify-content: center;
   z-index: 10000;

@@ -35,9 +35,22 @@ io.of("/").on("connection", (socket) => {
   socket.on("userDisconnecting", (data, callback) => {
     for (let indexOfRooms = 0; indexOfRooms < roomData.length; indexOfRooms++) {
       const roomDataToCheck = roomData[indexOfRooms];
+
+      if (roomDataToCheck.roomEditor === data) {
+        /// Check to see if there is anther user in room
+
+        roomDataToCheck.roomEditorDisconnecting(data);
+      }
       roomDataToCheck.removeUsernameFromRoom(data);
     }
+
     activeUsernames.removeUsername(data);
+
+    callback({
+      messageType: "Success",
+      messageText: "You've been disconnected.",
+    });
+    console.log(roomData);
     console.log("DISCONNECTED USER");
   });
 
@@ -78,35 +91,37 @@ roomChannels.forEach((channelName, index) => {
 
       // Step 1. Check to see if room has room
 
-      const roomData = roomData[index];
+      const selectedData = roomData[index];
 
-      if (roomData.usersInRoom.length < 2) {
+      if (selectedData.usersInRoom.length < 2) {
         // Step 2. Check if user is curren;y in room data
-        if (roomData.usersInRoom.length !== 0) {
+        if (selectedData.usersInRoom.length !== 0) {
           // Step 3. Add User
           let userInRoomAlready = false;
           for (
             let indexOfUsersInRoom = 0;
-            indexOfUsersInRoom < roomData.usersInRoom.length;
+            indexOfUsersInRoom < selectedData.usersInRoom.length;
             indexOfUsersInRoom++
           ) {
-            const selectedUsername = roomData.usersInRoom[indexOfUsersInRoom];
+            const selectedUsername =
+              selectedData.usersInRoom[indexOfUsersInRoom];
             if (selectedUsername === data) {
               userInRoomAlready = true;
               break;
             }
           }
           if (!userInRoomAlready) {
-            roomData.addNewUsernameToRoom(data);
+            selectedData.addNewUsernameToRoom(data);
 
             callback({
               messageType: "Success",
               messageText: "You have joined the room",
             });
-            console.log(103);
+
             io.of(channelName).emit("userJoined", {
               usernameThatJoined: data,
               gameRoomJoined: channelName,
+              isFirstUser: false,
             });
             /// We DON'T HAVE ANY ROOMS SO WE JUST EMIT TO THE ENTIRE CHANNEL
             // IF YOU HAD ROOMS IN THIS CHANNEL YOU'D FIRST NEED TO JOIN IT ON CONNECT
@@ -119,7 +134,8 @@ roomChannels.forEach((channelName, index) => {
           }
         } else {
           //"User Name Added NO ONE IN ROOM"
-          roomData.addNewUsernameToRoom(data);
+          selectedData.addNewUsernameToRoom(data);
+          selectedData.updateRoomEditor(data);
           callback({
             messageType: "Success",
             messageText: "You have joined the room",
@@ -128,6 +144,7 @@ roomChannels.forEach((channelName, index) => {
           io.of(channelName).emit("userJoined", {
             usernameThatJoined: data,
             gameRoomJoined: channelName,
+            isFirstUser: true,
           });
         }
       } else {
@@ -139,13 +156,30 @@ roomChannels.forEach((channelName, index) => {
         });
       }
     });
-    // numberOfUsers
 
     socket.on("numberOfUsersRequest", (callback) => {
-      const roomData = roomData[index];
-      callback(roomData.usersInRoom.length);
+      const selectedData = roomData[index];
+
+      callback(selectedData.usersInRoom.length);
     });
 
-    // Disconnect
+    socket.on("updateRoomEditor", (data, callback) => {
+      const selectedData = roomData[index];
+      selectedData.updateRoomEditor(data);
+
+      io.of(channelName).emit("updatedRoomEditor", {
+        newEditorUsername: data,
+        room: channelName,
+      });
+
+      callback({
+        messageType: "Success",
+        messageText: `${data} is now the Room Editor`,
+      });
+    });
+
+    socket.on("listOfUsersInRoomRequest", (callback) => {
+      callback(roomData[index].usersInRoom);
+    });
   });
 });

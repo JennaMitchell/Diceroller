@@ -1,7 +1,7 @@
 .connectButton {
   position: absolute;
   right: 50px;
-  top: 100px;
+  top: 40px;
   width: max-content;
   padding: 10px 20px;
   border-radius: 5px;
@@ -9,8 +9,9 @@
   background-color: red;
   color: white;
   transition: all 0.5s;
-  z-index: 10000;
+
   font-size: 18px;
+  z-index: 12;
 }
 .connectButton:hover {
   cursor: pointer;

@@ -1,0 +1,97 @@
+.popupEnableButton {
+  position: absolute;
+  right: 50px;
+  top: 100px;
+  width: max-content;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  background-color: red;
+  color: white;
+  transition: all 0.5s;
+  z-index: 12;
+  font-size: 18px;
+}
+.popupEnableButton:hover {
+  cursor: pointer;
+  background-color: white;
+  color: red;
+}
+.popupMainContainer {
+  width: max(300px, 300px);
+  height: max-content;
+  max-height: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  background-color: rgb(184, 5, 5);
+  border-radius: 15px;
+  padding: 20px 20px;
+  position: relative;
+  gap: 10px;
+}
+.popupTitle {
+  font-size: 22px;
+  width: max-content;
+  text-align: center;
+}
+.popupSubWindow {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: max(100%, 100%);
+  height: max(200px, 200px);
+  border-radius: 20px;
+  padding: 10px 20px;
+}
+.usernameToPassToContainer {
+  width: max(100%, 100%);
+  height: max-content;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  color: black;
+  border-radius: 10px;
+}
+.usernameToPassToContainer > p {
+  font-size: 20px;
+  color: inherit;
+}
+.usernameToPassToContainer > button {
+  color: white;
+  background-color: rgb(184, 5, 5);
+  width: max-content;
+  padding: 5px 10px;
+  border: none;
+  transition: all 0.5s;
+  font-size: 16px;
+  border-radius: 10px;
+}
+.usernameToPassToContainer > button:hover {
+  cursor: pointer;
+  color: rgb(184, 5, 5);
+  background-color: white;
+}
+.closingButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background-color: white;
+  color: rgb(184, 5, 5);
+  border-radius: 50%;
+  transition: all 0.5s;
+  font-size: 12px;
+  z-index: 2;
+}
+
+.closingButton:hover {
+  cursor: pointer;
+  background-color: rgb(184, 5, 5);
+  color: white;
+}
