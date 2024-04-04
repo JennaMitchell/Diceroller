@@ -5,6 +5,7 @@ import { canvasSettingsStoreSlice } from "./canvas-settings-store";
 import { animationSettingsStoreSlice } from "./animation-settings-store";
 import { popupSettingsStoreSlice } from "./popup-settings-store";
 import { userDataSettingsStoreSlice } from "./users-data-store";
+import { serverMessageSettingsStoreSlice } from "./server-message-store";
 const store = configureStore({
   reducer: {
     animationSettings: animationSettingsStoreSlice.reducer,
@@ -13,6 +14,7 @@ const store = configureStore({
     canvasSettings: canvasSettingsStoreSlice.reducer,
     popupSettings: popupSettingsStoreSlice.reducer,
     userDataSettings: userDataSettingsStoreSlice.reducer,
+    serverMessageStore: serverMessageSettingsStoreSlice.reducer,
   },
 });
 

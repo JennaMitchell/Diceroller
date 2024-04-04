@@ -1,8 +1,15 @@
 import { useRef, useState } from "react";
 import classes from "./settings-color-input.module.css";
-import { useAppDispatch } from "../../../../library/store/typescript-hooks";
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "../../../../library/store/typescript-hooks";
 import { meshSettingsStoreActions } from "../../../../library/store/mesh-settings-store";
 import { KeyboardEvent } from "react";
+
+import { nameSpaceListener } from "../../../../library/socket-io-functions/socket-connection";
+import { messageType } from "../../../popups/server-message/server-message-popup";
+import { serverMessageHandler } from "../../../../library/functions/serverMessageHandler";
 
 type SettingsColorInputPropsType = {
   name: string;
@@ -19,12 +26,49 @@ const SettingsColorInput = ({
   const colorTextInputRef = useRef<null | HTMLInputElement>(null);
   const [currentColorValue, setCurrentColorValue] = useState(currentValue);
   const dispatch = useAppDispatch();
+  const gameRoomJoined = useAppSelector(
+    (state) => state.userDataSettings.gameRoomJoined
+  );
+  const typescriptNamespace: any = nameSpaceListener;
+
   const updateStoreValues = (value: string) => {
     if (storeValueSet === "MeshColor") {
       dispatch(meshSettingsStoreActions.setMeshColor(value));
+      gameRoomJoined === "/roomOne" &&
+        typescriptNamespace.roomOne.emit(
+          "updateMeshColor",
+          value,
+          (messageResponse: messageType) => {
+            serverMessageHandler(dispatch, messageResponse);
+          }
+        );
+      gameRoomJoined === "/roomTwo" &&
+        typescriptNamespace.roomTwo.emit(
+          "updateMeshColor",
+          value,
+          (messageResponse: messageType) => {
+            serverMessageHandler(dispatch, messageResponse);
+          }
+        );
     }
     if (storeValueSet === "MeshTextColor") {
       dispatch(meshSettingsStoreActions.setTextColor(value));
+      gameRoomJoined === "/roomOne" &&
+        typescriptNamespace.roomOne.emit(
+          "updateMeshTextColor",
+          value,
+          (messageResponse: messageType) => {
+            serverMessageHandler(dispatch, messageResponse);
+          }
+        );
+      gameRoomJoined === "/roomTwo" &&
+        typescriptNamespace.roomTwo.emit(
+          "updateMeshTextColor",
+          value,
+          (messageResponse: messageType) => {
+            serverMessageHandler(dispatch, messageResponse);
+          }
+        );
     }
   };
 

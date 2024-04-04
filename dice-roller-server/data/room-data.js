@@ -1,12 +1,25 @@
 const RoomInstance = require("../classes/room");
 
-// roomId,
-// roomTitle,
-// roomIdSocketPath,
-// activeUsernames,
-// userWithDiceEditorPrivilege,
-// rollOutCome,
-// animationDirection
+//// Animation Settings ////
+
+//   startAnimation: false,
+// animationDirection: "Right",
+
+///// Mesh Settings ////
+
+// meshColor: "#ff0000",
+// meshHoverColor: "#ff9300",
+// meshColorIntensity: 1,
+// textColor: "#ffffff",
+// textColorIntensity: 1,
+// activeMeshType: "D20",
+// scale: 1,
+// activeAnimationType: "",
+// materialType: "Basic",
+
+///  Canvas Settings ////
+//   canvasBackgroundColor: "#feffff",
+/////////////////////////
 
 const roomOne = new RoomInstance(
   "roomOne",
@@ -16,7 +29,19 @@ const roomOne = new RoomInstance(
   "",
   0,
   "",
-  "right"
+  { startAnimation: false, animationDirection: "Right" },
+  {
+    meshColor: "#ff0000",
+    meshHoverColor: "#ff9300",
+    meshColorIntensity: 1,
+    textColor: "#ffffff",
+    textColorIntensity: 1,
+    activeMeshType: "D20",
+    scale: 1,
+    activeAnimationType: "",
+    materialType: "Basic",
+  },
+  { canvasBackgroundColor: "#feffff" }
 );
 const roomTwo = new RoomInstance(
   "roomTwo",
@@ -26,7 +51,19 @@ const roomTwo = new RoomInstance(
   "",
   0,
   "",
-  "right"
+  { startAnimation: false, animationDirection: "Right" },
+  {
+    meshColor: "#ff0000",
+    meshHoverColor: "#ff9300",
+    meshColorIntensity: 1,
+    textColor: "#ffffff",
+    textColorIntensity: 1,
+    activeMeshType: "D20",
+    scale: 1,
+    activeAnimationType: "",
+    materialType: "Basic",
+  },
+  { canvasBackgroundColor: "#feffff" }
 );
 
 const rooms = [roomOne, roomTwo];

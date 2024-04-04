@@ -24,6 +24,9 @@ const ConnectButton = () => {
             dispatch(userDataSettingsStoreActions.setGameRoomJoined(""));
             dispatch(userDataSettingsStoreActions.setIsRoomEditor(false));
             dispatch(userDataSettingsStoreActions.setUsername(""));
+            dispatch(
+              userDataSettingsStoreActions.setAttemptedToJoinRoom(false)
+            );
           }
           serverMessageHandler(dispatch, response);
         }

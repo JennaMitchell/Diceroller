@@ -17,15 +17,9 @@ const io = new Server(httpServer, {
   },
 });
 
-httpServer.listen(3001, () => {
-  console.log("Server Running");
-});
+httpServer.listen(3001, () => {});
 
-io.on("connect", (socket) => {
-  console.log("Hello");
-
-  console.log("connected");
-});
+io.on("connect", (socket) => {});
 
 const roomChannels = ["/roomOne", "/roomTwo"];
 
@@ -50,8 +44,6 @@ io.of("/").on("connection", (socket) => {
       messageType: "Success",
       messageText: "You've been disconnected.",
     });
-    console.log(roomData);
-    console.log("DISCONNECTED USER");
   });
 
   socket.on("activeUsernameCheck", (data, callback) => {
@@ -180,6 +172,129 @@ roomChannels.forEach((channelName, index) => {
 
     socket.on("listOfUsersInRoomRequest", (callback) => {
       callback(roomData[index].usersInRoom);
+    });
+
+    socket.on("updateMeshColor", (color, callback) => {
+      const selectedData = roomData[index];
+      selectedData.updateMeshColor(color);
+
+      io.of(channelName).emit("updatedMeshColor", {
+        newMeshColor: color,
+        room: channelName,
+      });
+
+      callback({
+        messageType: "Success",
+        messageText: `Dice color updated`,
+      });
+    });
+
+    socket.on("updateMeshColorIntensity", (intensity, callback) => {
+      const selectedData = roomData[index];
+      selectedData.updateMeshColorIntensity(intensity);
+
+      io.of(channelName).emit("updatedMeshColorIntensity", {
+        newMeshColorIntensity: intensity,
+        room: channelName,
+      });
+
+      callback({
+        messageType: "Success",
+        messageText: `Dice color updated`,
+      });
+    });
+
+    socket.on("updateMestTextColor", (color, callback) => {
+      const selectedData = roomData[index];
+      selectedData.updateMeshTextColor(color);
+
+      io.of(channelName).emit("updatedMeshTextColor", {
+        newMeshColor: color,
+        room: channelName,
+      });
+
+      callback({
+        messageType: "Success",
+        messageText: `Text color updated`,
+      });
+    });
+
+    socket.on("updateMeshTextColorIntensity", (intensity, callback) => {
+      const selectedData = roomData[index];
+      selectedData.updateMeshTextColorIntensity(intensity);
+
+      io.of(channelName).emit("updatedMeshTextColorIntensity", {
+        newMeshColorIntensity: intensity,
+        room: channelName,
+      });
+
+      callback({
+        messageType: "Success",
+        messageText: `Text color intensity updated.`,
+      });
+    });
+
+    socket.on("updateMeshScale", (scale, callback) => {
+      const selectedData = roomData[index];
+      selectedData.updateMeshScale(scale);
+
+      io.of(channelName).emit("updatedMeshScale", {
+        newScale: scale,
+        room: channelName,
+      });
+
+      callback({
+        messageType: "Success",
+        messageText: `Mesh scale updated`,
+      });
+    });
+
+    socket.on("updateAnimationDirection", (direction, callback) => {
+      const selectedData = roomData[index];
+      selectedData.updateAnimationDirection(direction);
+
+      io.of(channelName).emit("updatedAnimationDirection", {
+        newAnimationDirection: direction,
+        room: channelName,
+      });
+
+      callback({
+        messageType: "Success",
+        messageText: `Animation direction updated`,
+      });
+    });
+
+    socket.on("dieRolled", (values, callback) => {
+      const selectedData = roomData[index];
+
+      selectedData.updateStartAnimation(values.newAnimationStart);
+      selectedData.updateValueRolled(values.newValueRolled);
+
+      io.of(channelName).emit("newDieRolled", {
+        newStartAnimation: values.newAnimationStart,
+        newValueRolled: values.newValueRolled,
+        room: channelName,
+      });
+
+      callback({
+        messageType: "Success",
+        messageText: `Animation Started`,
+      });
+    });
+
+    socket.on("resetDieRoll", (values, callback) => {
+      const selectedData = roomData[index];
+      selectedData.updateStartAnimation(values.newAnimationStart);
+      selectedData.updateValueRolled(values.newValueRolled);
+
+      io.of(channelName).emit("dieRollReset", {
+        room: channelName,
+      });
+
+      callback({
+        messageType: "Success",
+        messageText: `Die Roll Reset`,
+      });
     });
   });
 });

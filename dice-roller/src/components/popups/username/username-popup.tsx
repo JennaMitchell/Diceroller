@@ -52,10 +52,18 @@ const UsernamePopup = () => {
               dispatch(
                 popupSettingsStoreActions.setRoomSelectPopupActive(true)
               );
+              dispatch(
+                userDataSettingsStoreActions.setAttemptedToJoinRoom(true)
+              );
               closePopup();
             }
           }
         );
+      } else {
+        serverMessageHandler(dispatch, {
+          messageType: "Error",
+          messageText: "Invalid username!",
+        });
       }
     }
   };

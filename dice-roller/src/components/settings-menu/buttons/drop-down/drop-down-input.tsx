@@ -1,7 +1,13 @@
+import { nameSpaceListener } from "../../../../library/socket-io-functions/socket-connection";
 import { animationSettingsStoreActions } from "../../../../library/store/animation-settings-store";
-import { useAppDispatch } from "../../../../library/store/typescript-hooks";
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "../../../../library/store/typescript-hooks";
 import classes from "./drop-down-input.module.css";
 import { useRef, useState } from "react";
+import { messageType } from "../../../popups/server-message/server-message-popup";
+import { serverMessageHandler } from "../../../../library/functions/serverMessageHandler";
 type DropDownProps = {
   dropDownOptions: string[];
   storeValueSet: string;
@@ -17,6 +23,10 @@ const DropDownInput = ({
 }: DropDownProps) => {
   const dropDownRef = useRef<null | HTMLSelectElement>(null);
   const [dropDownValue, setDropDownValue] = useState(currentValue);
+  const gameRoomJoined = useAppSelector(
+    (state) => state.userDataSettings.gameRoomJoined
+  );
+  const typescriptNamespace: any = nameSpaceListener;
   const dispatch = useAppDispatch();
 
   const selectChangeHandler = () => {
@@ -26,6 +36,23 @@ const DropDownInput = ({
       const notNullRef = possibleNullDropDown;
       const selectedValue = notNullRef.value;
       if (storeValueSet === "AnimationDirection") {
+        gameRoomJoined === "/roomOne" &&
+          typescriptNamespace.roomOne.emit(
+            "updateAnimationDirection",
+            selectedValue,
+            (messageResponse: messageType) => {
+              serverMessageHandler(dispatch, messageResponse);
+            }
+          );
+        gameRoomJoined === "/roomTwo" &&
+          typescriptNamespace.roomTwo.emit(
+            "updateAnimationDirection",
+            selectedValue,
+            (messageResponse: messageType) => {
+              serverMessageHandler(dispatch, messageResponse);
+            }
+          );
+
         dispatch(
           animationSettingsStoreActions.setAnimationDirection(selectedValue)
         );

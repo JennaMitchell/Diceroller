@@ -7,6 +7,8 @@ export const listeners = {
   userJoined: [],
 };
 
+export const gameRoomIds = ["/roomOne", "/roomTwo"];
+
 // listerner object is created to maek sure that the required lsiterneers are added and only added oncle
 
 // const addListener = (roomIndex) => {

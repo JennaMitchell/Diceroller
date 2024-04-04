@@ -4,12 +4,14 @@ type UserDataStoreStatesType = {
   username: String;
   gameRoomJoined: String;
   isRoomEditor: boolean;
+  attemptedToJoinRoom: boolean;
 };
 
 const initialState: UserDataStoreStatesType = {
   username: "",
   gameRoomJoined: "",
   isRoomEditor: false,
+  attemptedToJoinRoom: false,
 };
 
 export const userDataSettingsStoreSlice = createSlice({
@@ -24,6 +26,9 @@ export const userDataSettingsStoreSlice = createSlice({
     },
     setIsRoomEditor(state, { payload }) {
       state.isRoomEditor = payload;
+    },
+    setAttemptedToJoinRoom(state, { payload }) {
+      state.attemptedToJoinRoom = payload;
     },
   },
 });

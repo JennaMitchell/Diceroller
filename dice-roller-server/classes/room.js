@@ -6,17 +6,87 @@ class Room {
     usersInRoom,
     roomEditor,
     rollOutCome,
-    animationDirection
+    animationSettings,
+    meshSettings,
+    canvasSettings
   ) {
     this.roomId = roomId;
     this.roomTitle = roomTitle;
     this.roomIdSocketPath = roomIdSocketPath;
-
     this.usersInRoom = usersInRoom;
-
     this.roomEditor = roomEditor;
     this.rollOutCome = rollOutCome;
-    this.animationDirection = animationDirection;
+    this.animationSettings = animationSettings;
+    this.meshSettings = meshSettings;
+    this.canvasSettings = canvasSettings;
+  }
+
+  //// Animation Settings ////
+
+  //   startAnimation: false,
+
+  //animationDirection: "Right",
+
+  ///// Mesh Settings /////
+
+  // meshColor: "#ff0000",
+  // meshHoverColor: "#ff9300",
+  // meshColorIntensity: 1,
+  // textColor: "#ffffff",
+  // textColorIntensity: 1,
+  // activeMeshType: "D20",
+  // scale: 1,
+  // activeAnimationType: "",
+  // materialType: "Basic",
+
+  ////// Canvas Settings //////
+
+  // canvasBackgroundColor: "#feffff",
+
+  /////////////////////////
+
+  updateValueRolled(newValue) {
+    this.rollOutCome = newValue;
+  }
+
+  updateStartAnimation(newStartAnimation) {
+    const copyOfAnimatedSettings = { ...this.animationSettings };
+    copyOfAnimatedSettings.startAnimation = newStartAnimation;
+    this.animationSettings = copyOfAnimatedSettings;
+  }
+
+  updateAnimationDirection(newDirection) {
+    const copyOfAnimatedSettings = { ...this.animationSettings };
+    copyOfAnimatedSettings.animationDirection = newDirection;
+
+    this.animationSettings = copyOfAnimatedSettings;
+  }
+
+  updateMeshScale(newScale) {
+    this.scale = newScale;
+  }
+
+  updateMeshTextColorIntensity(meshTextColorIntensity) {
+    const copyOfMeshSettings = { ...this.meshSettings };
+    copyOfMeshSettings.textColorIntensity = meshTextColorIntensity;
+    this.meshSettings = copyOfMeshSettings;
+  }
+
+  updateMeshTextColor(meshTextColor) {
+    const copyOfMeshSettings = { ...this.meshSettings };
+    copyOfMeshSettings.textColor = meshTextColor;
+    this.meshSettings = copyOfMeshSettings;
+  }
+
+  updateMeshColor(meshColor) {
+    const copyOfMeshSettings = { ...this.meshSettings };
+    copyOfMeshSettings.meshColor = meshColor;
+    this.meshSettings = copyOfMeshSettings;
+  }
+  updateMeshColorIntensity(meshColorIntensity) {
+    const copyOfMeshSettings = { ...this.meshSettings };
+    copyOfMeshSettings.meshColorIntensity = meshColorIntensity;
+    this.meshSettings = copyOfMeshSettings;
   }
 
   addNewUsernameToRoom(usernameToAdd) {

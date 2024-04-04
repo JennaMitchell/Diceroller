@@ -4,6 +4,11 @@ import {
   useAppSelector,
 } from "../../../library/store/typescript-hooks";
 import classes from "./server-message-popup.module.css";
+
+export type messageType = {
+  messageType: string;
+  messageText: string;
+};
 const ServerMessagePopup = () => {
   const dispatch = useAppDispatch();
   const serverMessageText = useAppSelector(
