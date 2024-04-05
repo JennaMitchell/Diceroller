@@ -6,18 +6,20 @@ const http = require("http");
 const cors = require("cors");
 const roomData = require("./data/room-data");
 const activeUsernames = require("./data/active-usernames-data");
+const dotenv = require("dotenv");
+dotenv.config();
 
 app.use(cors());
 const httpServer = http.createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: process.env.ORIGIN_URL,
     methods: ["GET", "POST"],
     credentials: true,
   },
 });
 
-httpServer.listen(3001, () => {});
+httpServer.listen(process.env.LISTENING_PORT, () => {});
 
 io.on("connect", (socket) => {});
 
@@ -177,7 +179,6 @@ roomChannels.forEach((channelName, index) => {
     socket.on("updateMeshColor", (color, callback) => {
       const selectedData = roomData[index];
       selectedData.updateMeshColor(color);
-
       io.of(channelName).emit("updatedMeshColor", {
         newMeshColor: color,
         room: channelName,
@@ -204,12 +205,12 @@ roomChannels.forEach((channelName, index) => {
       });
     });
 
-    socket.on("updateMestTextColor", (color, callback) => {
+    socket.on("updateMeshTextColor", (color, callback) => {
       const selectedData = roomData[index];
       selectedData.updateMeshTextColor(color);
 
       io.of(channelName).emit("updatedMeshTextColor", {
-        newMeshColor: color,
+        newMeshTextColor: color,
         room: channelName,
       });
 
@@ -224,7 +225,7 @@ roomChannels.forEach((channelName, index) => {
       selectedData.updateMeshTextColorIntensity(intensity);
 
       io.of(channelName).emit("updatedMeshTextColorIntensity", {
-        newMeshColorIntensity: intensity,
+        newMeshTextColorIntensity: intensity,
         room: channelName,
       });
 
@@ -239,7 +240,7 @@ roomChannels.forEach((channelName, index) => {
       selectedData.updateMeshScale(scale);
 
       io.of(channelName).emit("updatedMeshScale", {
-        newScale: scale,
+        newMeshScale: scale,
         room: channelName,
       });
 

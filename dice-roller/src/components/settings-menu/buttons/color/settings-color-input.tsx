@@ -33,7 +33,6 @@ const SettingsColorInput = ({
 
   const updateStoreValues = (value: string) => {
     if (storeValueSet === "MeshColor") {
-      dispatch(meshSettingsStoreActions.setMeshColor(value));
       gameRoomJoined === "/roomOne" &&
         typescriptNamespace.roomOne.emit(
           "updateMeshColor",
@@ -52,7 +51,6 @@ const SettingsColorInput = ({
         );
     }
     if (storeValueSet === "MeshTextColor") {
-      dispatch(meshSettingsStoreActions.setTextColor(value));
       gameRoomJoined === "/roomOne" &&
         typescriptNamespace.roomOne.emit(
           "updateMeshTextColor",

@@ -1,5 +1,5 @@
 import { Canvas } from "@react-three/fiber";
-import { Stats } from "@react-three/drei";
+// import { Stats } from "@react-three/drei";
 import { D20 } from "./library/assets/3d-models/d20";
 
 import ResultPage from "./components/result-page/result-page";
@@ -104,9 +104,7 @@ export default function App() {
   useEffect(() => {
     //listen for perfData
 
-    socket.on("connection", (data: any) => {
-      console.log("Connected");
-    });
+    socket.on("connection", (data: any) => {});
 
     socket.on("sendingRoomData", async (data) => {
       const newListenersObject = { ...listeners };
@@ -144,8 +142,6 @@ export default function App() {
               newValueRolled: number;
               room: string;
             }) => {
-              console.log(146);
-              console.log(response);
               dispatch(
                 serverMessageSettingsStoreActions.setServerMessageName(
                   "newDieRolled"
@@ -263,6 +259,7 @@ export default function App() {
                   "updatedGameSetting"
                 )
               );
+
               dispatch(
                 serverMessageSettingsStoreActions.setUpdatedGameSettingsData({
                   variableName: "meshScale",
@@ -299,9 +296,7 @@ export default function App() {
         if (!newListenersObject.leaveRoom[i]) {
           typescriptNameSpace[`${data.roomData[i].roomId}`].on(
             "leaveRoom",
-            (response: any) => {
-              console.log(response);
-            }
+            (response: any) => {}
           );
 
           newListenersObject.leaveRoom[i] = "x";
@@ -407,11 +402,11 @@ export default function App() {
         <directionalLight position={[0, 100, 0]} intensity={1} />
         {/* <pointLight intensity={1000000} distance={1000} position={[0, 0, 0]} /> */}
 
-        <axesHelper args={[200]} />
+        {/* <axesHelper args={[200]} /> */}
 
         <D20 {...diceData} />
 
-        <Stats />
+        {/* <Stats /> */}
       </Canvas>
     </>
   );

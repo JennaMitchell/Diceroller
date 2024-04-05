@@ -5,7 +5,7 @@ import {
 } from "../../../../library/store/typescript-hooks";
 import classes from "./settings-slider.module.css";
 import { nameSpaceListener } from "../../../../library/socket-io-functions/socket-connection";
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { messageType } from "../../../popups/server-message/server-message-popup";
 import { serverMessageHandler } from "../../../../library/functions/serverMessageHandler";
 type SettingsInputPropsType = {
@@ -29,6 +29,18 @@ const SettingsSliderInput = ({
 
   const inputRef = useRef<null | HTMLInputElement>(null);
   const [inputValue, setInputValue] = useState(currentValue);
+
+  const [
+    savedName,
+    savedMin,
+    savedMax,
+    sliderType,
+    savedCurrentValue,
+    savedStep,
+  ] = useMemo(() => {
+    return [name, min, max, storeValueSet, currentValue, step];
+  }, []);
+
   const gameRoomJoined = useAppSelector(
     (state) => state.userDataSettings.gameRoomJoined
   );
@@ -40,25 +52,26 @@ const SettingsSliderInput = ({
       const inputRef = possibleNullRef;
       const inputValue = inputRef.value;
 
-      if (storeValueSet === "scale") {
-        gameRoomJoined === "/roomOne" &&
+      if (sliderType === "scale") {
+        if (gameRoomJoined === "/roomOne") {
           typescriptNamespace.roomOne.emit(
-            "meshScale",
+            "updateMeshScale",
             +inputValue,
             (messageResponse: messageType) => {
               serverMessageHandler(dispatch, messageResponse);
             }
           );
+        }
         gameRoomJoined === "/roomTwo" &&
           typescriptNamespace.roomTwo.emit(
-            "meshScale",
+            "updateMeshScale",
             +inputValue,
             (messageResponse: messageType) => {
               serverMessageHandler(dispatch, messageResponse);
             }
           );
         dispatch(meshSettingsStoreActions.setScale(+inputValue));
-      } else if (storeValueSet === "MeshColorIntensity") {
+      } else if (sliderType === "MeshColorIntensity") {
         gameRoomJoined === "/roomOne" &&
           typescriptNamespace.roomOne.emit(
             "updateMeshColorIntensity",
@@ -76,7 +89,7 @@ const SettingsSliderInput = ({
             }
           );
         dispatch(meshSettingsStoreActions.setMeshColorIntensity(+inputValue));
-      } else if (storeValueSet === "MeshTextColorIntensity") {
+      } else if (sliderType === "MeshTextColorIntensity") {
         gameRoomJoined === "/roomOne" &&
           typescriptNamespace.roomOne.emit(
             "updateMeshTextColorIntensity",
@@ -101,17 +114,18 @@ const SettingsSliderInput = ({
 
   return (
     <div className={classes.settingsSliderButtonContainer}>
-      <label htmlFor={`settings-${storeValueSet}-${name}`}>{name}</label>
+      <label htmlFor={`settings-${storeValueSet}-${savedName}`}>
+        {savedName}
+      </label>
       <div>
         <input
           type="range"
-          id={`settings-${storeValueSet}-${name}`}
-          min={min}
-          max={max}
+          id={`settings-${sliderType}-${savedName}`}
+          min={savedMin}
+          max={savedMax}
           ref={inputRef}
-          value={currentValue}
           onChange={settingSliderInputHandler}
-          step={step}
+          step={savedStep}
         />
         <p>{inputValue}</p>
       </div>
